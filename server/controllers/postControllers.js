@@ -10,6 +10,11 @@ const createPost = asyncHandler(
     async (req, res) => {
         const memory = req.body
 
+        if(!memory) {
+            res.status(400)
+            throw new Error('Complete all required fields')
+        }
+
         const post = await Post.create(memory)
 
         res.status(201).json(post)
@@ -18,19 +23,47 @@ const createPost = asyncHandler(
 
 const getPost = asyncHandler(
     async (req, res) => {
-        res.status(200).json({message: `Get Post ${req.params.id}`})
+        const id = req.params.id
+        const post = await Post.findById(id)
+
+        if(!post) {
+            res.status(400)
+            throw new Error('Post does not exist')
+        }
+
+        res.status(200).json(post)
     }
 )
 
 const updatePost = asyncHandler(
     async (req, res) => {
-        res.status(200).json({message: 'Update Post' + req.params.id})
+        const id = req.params.id
+        const update = req.body
+        const post = await Post.findById(id)
+
+        if(!post) {
+            res.status(400)
+            throw new Error('Post does not exist')
+        }
+
+        const updatedPost = await Post.findByIdAndUpdate(id, update, {new: true})
+        res.status(200).json(updatedPost)
     }
 )
 
 const deletePost = asyncHandler(
     async (req, res) => {
-        res.status(200).json({message: 'Delete Post' + req.params.id})
+        const id = req.params.id
+        const post = await Post.findById(id)
+
+        if(!post) {
+            res.status(400)
+            throw new Error('Post does not exist')
+        }
+
+        await post.remove()
+
+        res.status(200).json(id)
     }
 )
 
