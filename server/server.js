@@ -2,6 +2,7 @@ const express = require('express')
 const dotenv = require("dotenv").config()
 const mongoose = require("mongoose")
 const postRoutes = require('./routes/postRoutes')
+const userRoutes = require('./routes/userRoutes')
 const {errorHandler} = require('./middlewares/errorHandler')
 const port = process.env.PORT || process.env.LOCAL_PORT
 
@@ -12,6 +13,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
 app.use('/posts', postRoutes)
+app.use('/users', userRoutes)
 
 app.use(errorHandler)
 

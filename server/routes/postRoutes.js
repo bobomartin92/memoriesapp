@@ -1,9 +1,12 @@
-const { getPosts, createPost, updatePost, deletePost, getPost } = require('../controllers/postControllers')
+const { getPosts, createPost, updatePost, likePost, deletePost, getPost } = require('../controllers/postControllers')
+const { protect } = require('../middlewares/authMiddleware')
 
 const router = require('express').Router()
 
-router.route('/').get(getPosts).post(createPost)
+router.route('/').get(getPosts).post(protect, createPost)
 
-router.route('/:id').get(getPost).put(updatePost).delete(deletePost)
+router.route('/:id').get(getPost).put(protect, updatePost).delete(protect, deletePost)
+
+router.put('/like/:id', protect, likePost)
 
 module.exports = router

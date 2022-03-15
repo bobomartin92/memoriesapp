@@ -13,12 +13,22 @@ const postSchema = mongoose.Schema({
     tags: {
         type: [String]
     },
-    creator : String,
+    creatorId : {
+        type: String,
+        required: true,
+    },
+    creator : {
+        type: String,
+        required: true,
+    },
     selectedFile: {
         type: String,
         required: [true, 'Add an image of the memory']
     },
-    likeCount : {
+    likes : {
+        type: [String]
+    },
+    likesCount : {
         type: Number,
         default: 0
     }
@@ -26,4 +36,4 @@ const postSchema = mongoose.Schema({
     timestamps: true
 })
 
-module.exports = mongoose.model('post', postSchema)
+module.exports = mongoose.model('Post', postSchema)
