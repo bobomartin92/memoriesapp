@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Teko:wght@300;400;500;600;700&display=swap');
+
+.teko {
+    @apply font-marker text-3xl tracking-wider uppercase hover:scale-105 hover:font-bold transition
+}
+
+.nav-bar {
+    @apply px-5 flex justify-between items-center bg-white shadow-xl py-3 rounded-lg
+}
+.nav-btn {
+    @apply bg-blue-400 px-3 py-1 shadow-md rounded text-white hover:scale-110 transition
+}
+.nav-avatar {
+    @apply rounded-full py-1 px-3 bg-green-400 mr-2 uppercase text-center text-3xl font-extrabold
+}
+.auth-input {
+    @apply w-full border-2 p-3 mb-3 border-blue-400
+}
+.file-input {
+    @apply mb-3 text-sm
+}
+.auth-btn {
+    @apply w-full mb-4 bg-blue-400 py-3 shadow-md rounded text-white hover:scale-95 transition ease-linear duration-300
+}
+.clear-btn {
+    @apply w-full mb-4 bg-red-500 shadow-md rounded text-white
+}
+.post-btn {
+    @apply w-full mb-4 bg-blue-400 py-2 shadow-md rounded text-white hover:scale-95 transition ease-in-out duration-150
+}
+.post-form {
+    @apply bg-white shadow-lg p-3
+}
+
+
