@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { IconContext } from "react-icons";
 import { FaUserLock } from 'react-icons/fa'
 
-const Auth = () => {
+const Auth = ({setBurger}) => {
 
   const [auth, setAuth] = useState(true)
 
@@ -17,6 +17,11 @@ const Auth = () => {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log(formData);
+  }
+
+  const toggleAuth = () => {
+    setAuth(!auth)
+    setBurger(false)
   }
 
   return (
@@ -38,7 +43,7 @@ const Auth = () => {
             {!auth && <input onChange={handleChange} className='auth-input' type="password" name="password2" value={formData.password2} placeholder='Comfirm Password' required />}
             <button className='auth-btn' type="submit">{auth ? 'SIGN IN' : 'SIGN UP' }</button>
             <button className='auth-btn' type="submit">oAuth</button>
-            <h3 onClick={() => setAuth(!auth)} className='text-right text-gray-600 cursor-pointer hover:text-blue-500' >{auth ? "Don't Have An Account? Sign Up" : 'Already Have An Account? Sign In' }</h3>
+            <h3 onClick={toggleAuth} className='text-right text-gray-600 cursor-pointer hover:text-blue-500' >{auth ? "Don't Have An Account? Sign Up" : 'Already Have An Account? Sign In' }</h3>
           </form>
         </div>
     </div>

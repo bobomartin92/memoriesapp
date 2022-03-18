@@ -4,7 +4,7 @@ module.exports = {
     extend: {
       fontFamily: {
         'teko': ['Teko', 'sans-serif'],
-        'marker': 'Permanent Marker, cursive'
+        'marker': 'cursive'
       }
     },
   },
