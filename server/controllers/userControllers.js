@@ -26,10 +26,10 @@ const signup = asyncHandler( async(req, res) => {
     const salt = await bcrypt.genSalt(12)
     const hashedPassword = await bcrypt.hash(password, salt)
 
-    const user = User.create({name, email, password: hashedPassword})
+    const user = await User.create({name, email, password: hashedPassword})
 
     if (user) {
-        res.status(200).json({token: genToken(user._id)})
+        res.status(200).json({name: user.name, token: genToken(user._id)})
     } else {
         res.status(400)
         throw new Error('User not registered')
@@ -52,7 +52,7 @@ const signin = asyncHandler(
             throw new Error('User Do Not Exists')
         } else {
             if (await bcrypt.compare(password, user.password)) {
-                res.status(200).json({token: genToken(user._id)})
+                res.status(200).json({name: user.name, token: genToken(user._id)})
             } else {
                 res.status(400)
                 throw new Error('Password Incorrect')
