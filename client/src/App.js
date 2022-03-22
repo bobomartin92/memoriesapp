@@ -8,7 +8,7 @@ import Home from './pages/Home';
 import Post from './pages/Post';
 
 function App() {
-  
+
   const [burger, setBurger] = useState(false)
 
   return (
