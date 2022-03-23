@@ -7,9 +7,9 @@ const Post = ({post, handle}) => {
     const user = JSON.parse(localStorage.getItem('user'))
     const {handleEdit, handleLike, handleDelete} = handle
   return (
-    <div className='bg-white shadow-md rounded-xl overflow-hidden mb-5'>
+    <div onClick={() => console.log(`${post.title}`)} className='bg-white shadow-md rounded-xl overflow-hidden mb-5 hover:scale-105 transition cursor-pointer'>
         <div className="relative w-96 h-44">
-            <img className='w-full h-full' src={post.selectedFile} alt="image of place" />
+            <img className='w-full h-full' src={post.selectedFile} alt={`${post.title}`} />
             <div className='bg-gray-500 opacity-40 z-10 absolute w-full h-full top-0 '></div>
             <div className='absolute top-4 left-4 text-white z-20'>
                 <h3 className='font-extrabold tracking-tighter'>{post.creator}</h3>

@@ -58,36 +58,47 @@ const Auth = ({setBurger}) => {
     setBurger(false)
   }
 
+  if(isLoading) {
+    return (
+      <div className='top-5 left-5 h-screen'>
+        <div className='animate-spin w-16 h-16 border-8 rounded-full border-t-blue-600 border-b-blue-600 border-l-blue-600 border-r-blue-200'></div>
+      </div>
+    )
+  }
+
   return (
-    <div className='max-w-lg bg-white shadow-lg mx-auto mt-10 p-5'>
+    <section className="h-screen">
 
-        {auth ? 
-          <IconContext.Provider value={{ className: "block mx-auto rounded-full bg-red-400 p-1 mb-2 text-white", size: '3rem' }}>
-            <div>
-                <FaSignInAlt />
-            </div>
-          </IconContext.Provider> :
-          <IconContext.Provider value={{ className: "block mx-auto rounded-full bg-red-400 p-1 mb-2 text-white", size: '3rem' }}>
-            <div>
-                <FaUserLock />
-            </div>
-          </IconContext.Provider>
-        }
+      <div className='max-w-lg bg-white shadow-lg mx-auto mt-10 p-5'>
 
-        <h1 className='text-center font-bold text-2xl mb-4'>{auth ? 'Sign In' : 'Sign Up' }</h1>
+          {auth ? 
+            <IconContext.Provider value={{ className: "block mx-auto rounded-full bg-red-400 p-1 mb-2 text-white", size: '3rem' }}>
+              <div>
+                  <FaSignInAlt />
+              </div>
+            </IconContext.Provider> :
+            <IconContext.Provider value={{ className: "block mx-auto rounded-full bg-red-400 p-1 mb-2 text-white", size: '3rem' }}>
+              <div>
+                  <FaUserLock />
+              </div>
+            </IconContext.Provider>
+          }
 
-        <div>
-          <form autoComplete='off' noValidate onSubmit={handleSubmit}>
-            {!auth && <input onChange={handleChange} className= 'w-full border-2 p-3 mb-3 border-blue-400' type="text" name="name" value={name} placeholder='Enter Your Name*'/>}
-            <input onChange={handleChange} className='auth-input' type="email" name="email" value={email} placeholder='Enter Your Email*'/>
-            <input onChange={handleChange} className='auth-input' type="password" name="password" value={password} placeholder='Enter Your Password*'/>
-            {!auth && <input onChange={handleChange} className='auth-input' type="password" name="password2" value={password2} placeholder='Comfirm Password*'/>}
-            <button className='auth-btn' type="submit">{auth ? 'SIGN IN' : 'SIGN UP' }</button>
-            <button className='auth-btn' type="submit">oAuth</button>
-            <h3 onClick={toggleAuth} className='text-right text-gray-600 cursor-pointer hover:text-blue-500' >{auth ? "Don't Have An Account? Sign Up" : 'Already Have An Account? Sign In' }</h3>
-          </form>
-        </div>
-    </div>
+          <h1 className='text-center font-bold text-2xl mb-4'>{auth ? 'Sign In' : 'Sign Up' }</h1>
+
+          <div>
+            <form autoComplete='off' noValidate onSubmit={handleSubmit}>
+              {!auth && <input onChange={handleChange} className= 'w-full border-2 p-3 mb-3 border-blue-400' type="text" name="name" value={name} placeholder='Enter Your Name*'/>}
+              <input onChange={handleChange} className='auth-input' type="email" name="email" value={email} placeholder='Enter Your Email*'/>
+              <input onChange={handleChange} className='auth-input' type="password" name="password" value={password} placeholder='Enter Your Password*'/>
+              {!auth && <input onChange={handleChange} className='auth-input' type="password" name="password2" value={password2} placeholder='Comfirm Password*'/>}
+              <button className='auth-btn' type="submit">{auth ? 'SIGN IN' : 'SIGN UP' }</button>
+              <button className='auth-btn' type="submit">oAuth</button>
+              <h3 onClick={toggleAuth} className='text-right text-gray-600 cursor-pointer hover:text-blue-500' >{auth ? "Don't Have An Account? Sign Up" : 'Already Have An Account? Sign In' }</h3>
+            </form>
+          </div>
+      </div>
+    </section>
   )
 }
 
