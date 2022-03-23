@@ -6,6 +6,14 @@ const getPosts = asyncHandler( async(req, res) => {
     res.status(200).json(posts)
 })
 
+const getPostsBySearch = asyncHandler( async(req, res) => {
+    const {search} = req.query
+    const title = new RegExp(search, 'i')
+
+    const posts = await Post.find({$or: [{title}, {tags: {$in: title}}]})
+    res.status(200).json(posts)
+})
+
 const createPost = asyncHandler(
     async (req, res) => {
         const memory = req.body
@@ -101,6 +109,7 @@ const deletePost = asyncHandler(
 
 module.exports = {
     getPosts,
+    getPostsBySearch,
     createPost,
     getPost,
     updatePost,

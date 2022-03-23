@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify';
-import { getPosts, createPost, updatePost, likePost, deletePost} from '../features/post/postSlice'
+import { getPosts, createPost, updatePost, likePost, deletePost, getPostsBySearch} from '../features/post/postSlice'
 import PostForm from '../components/PostForm'
 import Posts from '../components/Posts'
 import SearchForm from '../components/SearchForm'
@@ -82,9 +82,13 @@ const Home = () => {
     dispatch(deletePost(post._id))
   }
 
+  const handleSearch = (search) => {
+    dispatch(getPostsBySearch(search))
+  }
+
   //Pagination
   const [currentPage, setCurrentPage] = useState(1)
-  const postsPerPage = 2
+  const postsPerPage = 12
 
   const indexOfLastPost = currentPage * postsPerPage
   const indexOfFirstPost = indexOfLastPost - postsPerPage
@@ -97,7 +101,7 @@ const Home = () => {
         </section>
         <section>
           <section className='flex flex-col-reverse lg:block mb-3'>
-              <SearchForm />
+              <SearchForm handleSearch={handleSearch} />
               {user ? <PostForm postForm={{handleChange, handleSubmit, clear, formData, setFormData, edit}} /> : 
               
               <div className='bg-white shadow-lg py-2 px-3 text-justify mb-3 lg:mb-0'>

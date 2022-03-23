@@ -7,6 +7,11 @@ const getPosts = async () => {
     return res.data
 }
 
+const getPostsBySearch = async (searchQuery) => {
+    const res = await axios.get(`${API_URL}search?search=${searchQuery}`)
+    return res.data
+}
+
 const createPost = async (postData, token) => {
     const config = {
         headers: {
@@ -48,7 +53,7 @@ const deletePost = async (id, token) => {
 }
 
 const postService = {
-    getPosts, createPost, updatePost, likePost, deletePost
+    getPosts, createPost, updatePost, likePost, deletePost, getPostsBySearch
 }
 
 export default postService
