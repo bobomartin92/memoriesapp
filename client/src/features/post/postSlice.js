@@ -3,6 +3,7 @@ import postService from './postService'
 
 const initialState = {
     posts: [],
+    post: null,
     isError: false,
     isSuccess: false,
     isLoading: false,
@@ -14,6 +15,17 @@ const initialState = {
 export const getPosts = createAsyncThunk('post/getPosts', async(thunkAPI) => {
     try {
         return await postService.getPosts()
+    } catch (error) {
+        const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+        return thunkAPI.rejectWithValue(message)
+    }
+})
+
+//Get A Post
+
+export const getPost = createAsyncThunk('post/getPost', async(id, thunkAPI) => {
+    try {
+        return await postService.getPost(id)
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
         return thunkAPI.rejectWithValue(message)
@@ -103,7 +115,19 @@ export const postSlice = createSlice({
             .addCase(getPosts.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
-                state.user = []
+                state.message = action.payload
+            })
+            .addCase(getPost.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getPost.fulfilled, (state, action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.post = action.payload
+            })
+            .addCase(getPost.rejected, (state, action) => {
+                state.isLoading = false
+                state.isError = true
                 state.message = action.payload
             })
             .addCase(getPostsBySearch.pending, (state) => {
@@ -117,7 +141,6 @@ export const postSlice = createSlice({
             .addCase(getPostsBySearch.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
-                state.user = []
                 state.message = action.payload
             })
             .addCase(createPost.pending, (state) => {

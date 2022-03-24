@@ -7,6 +7,11 @@ const getPosts = async () => {
     return res.data
 }
 
+const getPost = async (id) => {
+    const res = await axios.get(`${API_URL}${id}`)
+    return res.data
+}
+
 const getPostsBySearch = async (searchQuery) => {
     const res = await axios.get(`${API_URL}search?search=${searchQuery}`)
     return res.data
@@ -53,7 +58,7 @@ const deletePost = async (id, token) => {
 }
 
 const postService = {
-    getPosts, createPost, updatePost, likePost, deletePost, getPostsBySearch
+    getPosts, createPost, updatePost, likePost, deletePost, getPostsBySearch, getPost
 }
 
 export default postService

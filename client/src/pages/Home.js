@@ -15,6 +15,7 @@ const Home = () => {
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
+
   const {posts, isLoading, isError, message: errMessage} = useSelector(state => state.post)
   
   const [formData, setFormData] = useState({
@@ -77,14 +78,19 @@ const Home = () => {
     setEdit(true)
     setFormData({title, message, tags:tags.join(','), selectedFile, _id})
   }
-  
+  //Delete Post
   const handleDelete = (post) => {
     dispatch(deletePost(post._id))
   }
 
-  const handleSearch = (search) => {
-    dispatch(getPostsBySearch(search))
+  //Serach Post
+  const [search, setSearch] = useState(false)
+  const handleSearch = (searchTerm) => {
+    dispatch(getPostsBySearch(searchTerm))
+    setSearch(true)
   }
+
+  
 
   //Pagination
   const [currentPage, setCurrentPage] = useState(1)
@@ -94,10 +100,17 @@ const Home = () => {
   const indexOfFirstPost = indexOfLastPost - postsPerPage
   const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost)
 
+  useEffect(() => {
+    if(search && currentPosts.length === 0) {
+      toast.error('No Search Result')
+      dispatch(getPosts())
+    }
+  }, [currentPosts.length, dispatch, search])
+
   return (
     <div className='px-4 flex flex-col-reverse lg:grid lg:grid-cols-3 gap-x-4'>
         <section className='lg:col-span-2'>
-            <Posts posts={currentPosts} isLoading={isLoading} handle={{handleEdit, handleLike, handleDelete}}  />
+            <Posts posts={currentPosts} isLoading={isLoading} handle={{navigate, handleEdit, handleLike, handleDelete}}  />
         </section>
         <section>
           <section className='flex flex-col-reverse lg:block mb-3'>
@@ -109,6 +122,7 @@ const Home = () => {
               </div>}
           </section>
           <Pagination page={{postsPerPage, setCurrentPage}} totalPages={posts.length} cp={currentPage} />
+      
         </section>
     </div>
   )

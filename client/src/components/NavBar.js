@@ -3,6 +3,7 @@ import {IconContext} from 'react-icons'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout, reset } from '../features/auth/authSlice'
+import { getPosts } from '../features/post/postSlice'
 
 const NavBar = ({ burger, setBurger }) => {
 
@@ -16,11 +17,17 @@ const NavBar = ({ burger, setBurger }) => {
         navigate('/')
         setBurger(false)
     }
+
+    const refresh = () => {
+        setBurger(false)
+        dispatch(getPosts())
+        navigate('/')
+    }
     
 
   return (
         <nav className='mb-5 bg-white shadow-xl rounded-lg flex justify-between items-center p-3 lg:p-5'>
-            <Link onClick={() => setBurger(false)} className='font-marker text-2xl tracking-wider uppercase hover:scale-105 hover:font-bold transition' to='/'>Memories</Link>
+            <Link onClick={refresh} className='font-marker text-2xl tracking-wider uppercase hover:scale-105 hover:font-bold transition' to='/'>Memories</Link>
             <div className='hidden lg:flex'>
                     {user &&
                         <div className='flex justify-end items-center mr-10'>

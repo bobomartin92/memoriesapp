@@ -5,9 +5,9 @@ import moment from 'moment';
 
 const Post = ({post, handle}) => {
     const user = JSON.parse(localStorage.getItem('user'))
-    const {handleEdit, handleLike, handleDelete} = handle
+    const {handleEdit, handleLike, handleDelete, navigate} = handle
   return (
-    <div onClick={() => console.log(`${post.title}`)} className='bg-white shadow-md rounded-xl overflow-hidden mb-5 hover:scale-105 transition cursor-pointer'>
+    <div onClick={() => navigate(`/post/${post._id}`)} className='bg-white shadow-md rounded-xl overflow-hidden mb-5 hover:scale-105 transition cursor-pointer'>
         <div className="relative w-96 h-44">
             <img className='w-full h-full' src={post.selectedFile} alt={`${post.title}`} />
             <div className='bg-gray-500 opacity-40 z-10 absolute w-full h-full top-0 '></div>
@@ -26,7 +26,7 @@ const Post = ({post, handle}) => {
                 post.tags.map(tag => `#${tag} `)
             }</p>
             <h3 className='mt-3 mb-4 font-bold'>{post.title}</h3>
-            <p className='text-gray-400 mb-3 text-xs h-16'>{`${post.message.substring(0,150)}...`}</p>
+            <p className='text-gray-400 mb-3 text-xs text-justify h-16'>{`${post.message.substring(0,150)}...`}</p>
             <div className='flex justify-between'>
                 <div className='flex items-center'>
                     {user && <IconContext.Provider value={{ className: "text-blue-600 cursor-pointer" }}>
