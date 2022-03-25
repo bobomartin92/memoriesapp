@@ -83,6 +83,26 @@ const likePost = asyncHandler(
     }
 )
 
+const addComment = asyncHandler(
+    async (req, res) => {
+        const id = req.params.id
+        const {name, text} = req.body
+        
+        const post = await Post.findById(id)
+
+        if(!post) {
+            res.status(400)
+            throw new Error('Post does not exist')
+        }
+
+        post.comments.push({name, text})
+
+        const updatedPost = await Post.findByIdAndUpdate(id, { comments: post.comments }, {new: true})
+
+        res.status(200).json(updatedPost)
+    }
+)
+
 const deletePost = asyncHandler(
     async (req, res) => {
         const id = req.params.id
@@ -115,4 +135,5 @@ module.exports = {
     updatePost,
     likePost,
     deletePost,
+    addComment
 }

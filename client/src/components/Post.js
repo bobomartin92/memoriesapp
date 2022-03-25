@@ -27,7 +27,7 @@ const Post = ({post, handle}) => {
             }</p>
             <h3 className='mt-3 mb-4 font-bold'>{post.title}</h3>
             <p className='text-gray-400 mb-3 text-xs text-justify h-16'>{`${post.message.substring(0,150)}...`}</p>
-            <div className='flex justify-between'>
+            <div className='flex justify-between mt-2'>
                 <div className='flex items-center'>
                     {user && <IconContext.Provider value={{ className: "text-blue-600 cursor-pointer" }}>
                         <div onClick={() => handleLike(post)}>

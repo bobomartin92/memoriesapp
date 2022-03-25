@@ -47,6 +47,17 @@ const likePost = async (id, token) => {
     return res.data
 }
 
+const addComment = async ({id, comment}, token) => {
+    const config = {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    }
+    console.log('2', id, comment);
+    const res = await axios.put(`${API_URL}comment/${id}`, comment, config)
+    return res.data
+}
+
 const deletePost = async (id, token) => {
     const config = {
         headers: {
@@ -58,7 +69,7 @@ const deletePost = async (id, token) => {
 }
 
 const postService = {
-    getPosts, createPost, updatePost, likePost, deletePost, getPostsBySearch, getPost
+    getPosts, createPost, updatePost, likePost, deletePost, getPostsBySearch, getPost, addComment
 }
 
 export default postService
