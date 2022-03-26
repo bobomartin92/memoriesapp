@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { addComment, getPost } from '../features/post/postSlice'
 import moment from 'moment';
 
@@ -8,6 +8,7 @@ const Post = () => {
   const {id} = useParams()
   const user = JSON.parse(localStorage.getItem('user'))
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const {post, isLoading} = useSelector(state => state.post)
   const [text, setText] = useState('')
   const commentsRef = useRef()
@@ -53,11 +54,13 @@ const Post = () => {
               </div>
                 <div ref={commentsRef} />
             </div>
-            {user && <div className='mb-4'>
+            {user ? <div className='mb-4'>
               <h1 className='my-2 font-bold text-center'>Add a comment</h1>
               <textarea onChange={(e) => setText(e.target.value)} className='border-2 border-blue-400 w-full p-2' name="text" cols="30" rows="10" value={text} placeholder='Comment'></textarea>
               <button disabled={!text} onClick={handleComment} className='w-full py-2 mt-1 bg-blue-400 rounded text-white disabled:cursor-not-allowed disabled:bg-gray-200'>Comment</button>
-            </div>}
+            </div> : <div className='mb-4'>
+                <h1 className='my-2 text-center'><span onClick={() => navigate('/auth')} className='text-blue-400 underline cursor-pointer'>Sign In</span> to add a comment</h1>
+              </div>}
           </section>
         </div>}
     </div>

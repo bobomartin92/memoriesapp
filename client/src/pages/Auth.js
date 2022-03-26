@@ -58,17 +58,9 @@ const Auth = ({setBurger}) => {
     setBurger(false)
   }
 
-  if(isLoading) {
-    return (
-      <div className='top-5 left-5 h-screen'>
-        <div className='animate-spin w-16 h-16 border-8 rounded-full border-t-blue-600 border-b-blue-600 border-l-blue-600 border-r-blue-200'></div>
-      </div>
-    )
-  }
-
   return (
     <section className="h-screen">
-
+      {isLoading && <div className='animate-spin w-16 h-16 border-8 rounded-full border-t-blue-600 border-b-blue-600 border-l-blue-600 border-r-blue-200'></div>}
       <div className='max-w-lg bg-white shadow-lg mx-auto mt-10 p-5'>
 
           {auth ? 

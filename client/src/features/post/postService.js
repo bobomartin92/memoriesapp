@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = '/posts/'
+const API_URL = 'http://localhost:5500/posts'
 
 const getPosts = async () => {
     const res = await axios.get(API_URL)
@@ -8,12 +8,12 @@ const getPosts = async () => {
 }
 
 const getPost = async (id) => {
-    const res = await axios.get(`${API_URL}${id}`)
+    const res = await axios.get(`${API_URL}/${id}`)
     return res.data
 }
 
 const getPostsBySearch = async (searchQuery) => {
-    const res = await axios.get(`${API_URL}search?search=${searchQuery}`)
+    const res = await axios.get(`${API_URL}/search?search=${searchQuery}`)
     return res.data
 }
 
@@ -33,7 +33,7 @@ const updatePost = async ({id, updatedPost}, token) => {
             Authorization: `Bearer ${token}`
         }
     }
-    const res = await axios.put(`${API_URL}${id}`, updatedPost, config)
+    const res = await axios.put(`${API_URL}/${id}`, updatedPost, config)
     return res.data
 }
 
@@ -43,7 +43,7 @@ const likePost = async (id, token) => {
             Authorization: `Bearer ${token}`
         }
     }
-    const res = await axios.put(`${API_URL}like/${id}`, id, config)
+    const res = await axios.put(`${API_URL}/like/${id}`, id, config)
     return res.data
 }
 
@@ -53,7 +53,7 @@ const addComment = async ({id, comment}, token) => {
             Authorization: `Bearer ${token}`
         }
     }
-    const res = await axios.put(`${API_URL}comment/${id}`, comment, config)
+    const res = await axios.put(`${API_URL}/comment/${id}`, comment, config)
     return res.data
 }
 
@@ -63,7 +63,7 @@ const deletePost = async (id, token) => {
             Authorization: `Bearer ${token}`
         }
     }
-    const res = await axios.delete(`${API_URL}${id}`, config)
+    const res = await axios.delete(`${API_URL}/${id}`, config)
     return res.data
 }
 

@@ -187,6 +187,7 @@ export const postSlice = createSlice({
                 state.isLoading = false
                 state.isSuccess = true
                 state.posts = state.posts.map(post => post._id === action.payload._id ? action.payload : post)
+                state.post = action.payload
             })
             .addCase(likePost.rejected, (state, action) => {
                 state.isLoading = false
