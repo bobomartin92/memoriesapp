@@ -53,7 +53,6 @@ const addComment = async ({id, comment}, token) => {
             Authorization: `Bearer ${token}`
         }
     }
-    console.log('2', id, comment);
     const res = await axios.put(`${API_URL}comment/${id}`, comment, config)
     return res.data
 }

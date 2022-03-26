@@ -84,7 +84,6 @@ export const likePost = createAsyncThunk('post/likePost', async(id, thunkAPI) =>
 export const addComment = createAsyncThunk('post/addComment', async(commentData, thunkAPI) => {
     try {
         const token = thunkAPI.getState().auth.user.token
-        console.log('1', commentData);
         return await postService.addComment(commentData, token)
     } catch (error) {
         const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
@@ -176,15 +175,14 @@ export const postSlice = createSlice({
                 state.isLoading = false
                 state.isSuccess = true
                 state.posts = state.posts.map(post => post._id === action.payload._id ? action.payload : post)
+                state.post = action.payload
             })
             .addCase(updatePost.rejected, (state, action) => {
                 state.isLoading = false
                 state.isError = true
                 state.message = action.payload
             })
-            .addCase(likePost.pending, (state) => {
-                state.isLoading = true
-            })
+            .addCase(likePost.pending, (state) => {})
             .addCase(likePost.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true
@@ -195,9 +193,7 @@ export const postSlice = createSlice({
                 state.isError = true
                 state.message = action.payload
             })
-            .addCase(addComment.pending, (state) => {
-                state.isLoading = true
-            })
+            .addCase(addComment.pending, (state) => {})
             .addCase(addComment.fulfilled, (state, action) => {
                 state.isLoading = false
                 state.isSuccess = true

@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useRef} from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify';
@@ -11,6 +11,7 @@ import Pagination from '../components/Pagination';
 const Home = () => {
 
   const user = JSON.parse(localStorage.getItem('user'))
+  const editForm = useRef()
   const [edit, setEdit] = useState(false)
 
   const navigate = useNavigate()
@@ -46,6 +47,7 @@ const Home = () => {
           } else {
             const updatedPost = {title, message, selectedFile, tags: tags.split(',')}
             dispatch(updatePost({updatedPost, id: formData._id}))
+            navigate(`/post/${formData._id}`)
           }
         } else {
 
@@ -77,6 +79,7 @@ const Home = () => {
     const {title, message, tags, selectedFile, _id} = post
     setEdit(true)
     setFormData({title, message, tags:tags.join(','), selectedFile, _id})
+    editForm.current.focus()
   }
   //Delete Post
   const handleDelete = (post) => {
@@ -111,11 +114,14 @@ const Home = () => {
     <div className='px-4 flex flex-col-reverse lg:grid lg:grid-cols-3 gap-x-4'>
         <section className='lg:col-span-2'>
             <Posts posts={currentPosts} isLoading={isLoading} handle={{navigate, handleEdit, handleLike, handleDelete}}  />
+            <div className='lg:hidden'>
+              <Pagination page={{postsPerPage, setCurrentPage}} totalPages={posts.length} cp={currentPage} />
+            </div>
         </section>
         <section>
           <section className='flex flex-col-reverse lg:block mb-3'>
               <SearchForm handleSearch={handleSearch} />
-              {user ? <PostForm postForm={{handleChange, handleSubmit, clear, formData, setFormData, edit}} /> : 
+              {user ? <PostForm postForm={{handleChange, handleSubmit, clear, formData, setFormData, edit, editForm}} /> : 
               
               <div className='bg-white shadow-lg py-2 px-3 text-justify mb-3 lg:mb-0'>
                 Please <span className='cursor-pointer text-blue-400' onClick={() => navigate('/auth')}>Sign In</span> to create memories and also like and comment on other memories.

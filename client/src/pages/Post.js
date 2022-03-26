@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { addComment, getPost } from '../features/post/postSlice'
@@ -10,6 +10,7 @@ const Post = () => {
   const dispatch = useDispatch()
   const {post, isLoading} = useSelector(state => state.post)
   const [text, setText] = useState('')
+  const commentsRef = useRef()
 
   useEffect(() => {
     dispatch(getPost(id))
@@ -27,6 +28,9 @@ const Post = () => {
     const comment = {name:  user.name, text}
     dispatch(addComment({id, comment}))
     setText('')
+
+    commentsRef.current.scrollIntoView()
+    
   }
 
   return (
@@ -47,6 +51,7 @@ const Post = () => {
               <div className='px-4 h-48 overflow-y-auto'>
                 {post.comments.map((c,i) => <p key={i} className='border-b-2 border-gray-400 px-2 mt-2 py-2'><span className='font-extrabold'>{c.name}</span> {` ${c.text}`}</p>)}
               </div>
+                <div ref={commentsRef} />
             </div>
             {user && <div className='mb-4'>
               <h1 className='my-2 font-bold text-center'>Add a comment</h1>
